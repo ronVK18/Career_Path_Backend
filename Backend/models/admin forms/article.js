@@ -8,7 +8,15 @@ const articleSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  description: {
+  expert:{
+    type:String,
+    required:true
+  },
+  author:{
+    type:String,
+    required:true,
+  },
+  content: {
     type: String,
     required: true
   },
@@ -17,30 +25,22 @@ const articleSchema = new mongoose.Schema({
     required: true,
 
   },
-  tags: [{
-    type: String
-  }],
+
   date: {
     type: Date,
     default: Date.now
   },
-  source: {
-    type: String, 
-    validate: {
-      validator: function (v) {
-        return /^https?:\/\/.+/.test(v);
-      },
-      message: props => `${props.value} is not a valid URL!`
-    }
-  },
-  photo: {
+
+  thumbnail: {
     type: String, 
     default: null
   },
-  document: {
-    type: String, 
-    default: null
+
+  idFeatured:{
+    type:Boolean,
+    default:false
   }
+
 });
 
 module.exports = mongoose.model('Article', articleSchema);
