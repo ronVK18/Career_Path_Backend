@@ -1,5 +1,5 @@
 // utils/cloudinaryUpload.js
-const cloudinary = require("../config/cloudinary");
+const {cloudinary} = require("../utills/cloudinaryUpload");
 const fs = require("fs/promises");
 
 async function uploadToCloudinary(localPath, folder, resourceType = "image") {

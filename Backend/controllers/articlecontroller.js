@@ -1,5 +1,5 @@
 const Article = require('../models/admin forms/article');
-const uploadToCloudinary = require('../utils/cloudinaryUpload'); // custom helper
+const uploadToCloudinary = require('../utills/cloudinaryUpload'); // custom helper
 const fs = require('fs/promises');
 
 // CREATE new article
@@ -7,36 +7,33 @@ exports.createArticle = async (req, res) => {
   try {
     const {
       title,
-      description,
+      expert,
+      author,
+      content,
       category,
-      tags = [],
-      date,
-      source
+      isFeatured,
     } = req.body;
 
-    const photoFile = req.files?.photo?.[0];
-    const documentFile = req.files?.document?.[0];
+    const thumbnail = req.files?.photo?.[0];
 
-    let photoUrl = null;
-    let documentUrl = null;
+    let thumbnailurl = null;
+   
 
-    if (photoFile) {
-      photoUrl = await uploadToCloudinary(photoFile.path, 'articles/photos', 'image');
+    if (thumbnailurl) {
+      thumbnailurl = await uploadToCloudinary(thumbnail.path, 'articles/photos', 'image');
     }
 
-    if (documentFile) {
-      documentUrl = await uploadToCloudinary(documentFile.path, 'articles/documents', 'raw');
-    }
+   
 
     const article = new Article({
       title,
-      description,
+      expert,
+      author,
+      content,
       category,
-      tags: Array.isArray(tags) ? tags : tags.split(',').map(t => t.trim()),
-      date,
-      source,
-      photo: photoUrl,
-      document: documentUrl
+      isFeatured,
+      thumbnail:thumbnailurl,
+
     });
 
     await article.save();

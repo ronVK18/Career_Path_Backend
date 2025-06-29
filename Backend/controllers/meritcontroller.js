@@ -15,10 +15,7 @@ exports.createMerit = async (req, res) => {
     }
 
     const merit = new Merit({
-      title,
-      description,
-      date,
-      document: documentUrl
+       
     });
 
     await merit.save();

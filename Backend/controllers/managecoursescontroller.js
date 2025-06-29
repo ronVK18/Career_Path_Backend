@@ -1,24 +1,20 @@
 const Course = require('../models/admin forms/managecourses');
-const uploadToCloudinary = require('../utils/cloudinaryUpload');
-const fs = require('fs/promises');
+//const uploadToCloudinary = require('../utils/cloudinaryUpload');
+//const fs = require('fs/promises');
 
 // CREATE new course
 exports.createCourse = async (req, res) => {
   try {
-    const { coursetitle, description, category, courselink } = req.body;
-    const photoFile = req.files?.coursephoto?.[0];
+    const { courseId,name,duration,popularity,type,stream} = req.body;
 
-    let photoUrl = null;
-    if (photoFile) {
-      photoUrl = await uploadToCloudinary(photoFile.path, 'courses/photos', 'image');
-    }
 
     const course = new Course({
-      coursetitle,
-      description,
-      category,
-      courselink,
-      coursephoto: photoUrl
+   courseId,
+   name,
+   duration,
+   popularity,
+   type,
+   stream
     });
 
     await course.save();
